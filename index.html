@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Valentine 💘</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffe6f0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .box {
+            text-align: center;
+            padding: 20px;
+            max-width: 90vw;
+        }
+
+        h1 {
+            color: #ff1a75;
+            font-size: clamp(28px, 6vw, 42px);
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 22px;
+            font-size: 18px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.25s ease;
+        }
+
+        #yes {
+            background: #ff4d88;
+            color: white;
+        }
+
+        #no {
+            background: #999;
+            color: white;
+        }
+
+        #sad {
+            color: #ff4d88;
+            margin-top: 15px;
+            font-size: 16px;
+            min-height: 24px;
+        }
+
+        .heart {
+            position: fixed;
+            bottom: -20px;
+            font-size: 20px;
+            animation: float 4s linear forwards;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            to {
+                transform: translateY(-120vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h1>Will you be my Valentine? 💌</h1>
+
+    <div>
+        <button id="yes" onclick="yesClick()">Yes 💖</button>
+        <button id="no" onclick="noClick()">No 😒</button>
+    </div>
+
+    <p id="sad"></p>
+</div>
+
+<script>
+    let tries = 0;
+    let yesSize = 18;
+
+    function noClick() {
+        tries++;
+
+        const messages = [
+            "Are you sure? 😔",
+            "Think again",
+            "Are you really really sure?",
+            "Second chance maybe?",
+            "Still a NO?",
+            "Okay then."
+        ];
+
+        document.getElementById("sad").innerText =
+            messages[Math.min(tries - 1, messages.length - 1)];
+
+        // Yes button grows
+        yesSize += 5;
+        document.getElementById("yes").style.fontSize = yesSize + "px";
+
+        // After enough tries, No gives up
+        if (tries > 6) {
+            const noBtn = document.getElementById("no");
+            noBtn.innerText = "Yes 💖";
+            noBtn.style.background = "#ff4d88";
+            noBtn.onclick = yesClick;
+        }
+    }
+
+    function yesClick() {
+        document.body.innerHTML = `
+            <div style="
+                height:100vh;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                background:#ffb6c1;
+                font-family:Arial, sans-serif;
+                text-align:center;
+                overflow:hidden;
+            ">
+                <h1 style="
+                    color:#ff1a75;
+                    font-size:clamp(32px, 6vw, 48px);
+                    padding:20px;
+                ">
+                    Hehehe 😌💘 I knew it.<br>
+                    Valentine secured 💖
+                </h1>
+            </div>
+        `;
+
+        setInterval(createHeart, 180);
+    }
+
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 18 + 14 + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 4000);
+    }
+</script>
+
+</body>
+</html>
